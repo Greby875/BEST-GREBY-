@@ -1640,4 +1640,38 @@ body.dark-mode .section-header h2{
 
         padding:60px 0;
 
+    }/* Mobile Navigation */
+
+@media (max-width:992px){
+
+    .nav-links{
+
+        display:none;
+
+        flex-direction:column;
+
+        position:absolute;
+
+        top:100%;
+
+        left:0;
+
+        width:100%;
+
+        background:var(--white);
+
+        padding:20px;
+
+        box-shadow:var(--shadow-medium);
+
+        z-index:999;
+
     }
+
+    .nav-links.active{
+
+        display:flex;
+
+    }
+
+}
