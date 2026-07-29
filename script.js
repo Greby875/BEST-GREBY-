@@ -195,4 +195,382 @@ document.addEventListener("click", (event) => {
 
     }
 
+});/*==========================================================
+    SECTION 3 - HERO SLIDER
+==========================================================*/
+
+/*--------------------------
+    HERO SLIDES
+---------------------------*/
+
+const heroSlides = [
+
+    {
+        title: "Shop Smarter.<br>Save More.",
+        text: "Discover amazing products at unbeatable prices. Fast delivery, secure payments and quality you can trust.",
+        image: "images/hero.png"
+    },
+
+    {
+        title: "New Arrivals Every Week",
+        text: "Explore the latest products added to our collection.",
+        image: "images/hero2.png"
+    },
+
+    {
+        title: "Big Discounts Await",
+        text: "Save more with exclusive deals and limited-time offers.",
+        image: "images/hero3.png"
+    }
+
+];
+
+/*--------------------------
+    HERO ELEMENTS
+---------------------------*/
+
+const heroTitle = document.querySelector(".hero-text h1");
+
+const heroDescription = document.querySelector(".hero-text p");
+
+const heroImage = document.querySelector(".hero-image img");
+
+/*--------------------------
+    UPDATE HERO
+---------------------------*/
+
+function updateHero(){
+
+    if(!heroTitle || !heroDescription || !heroImage){
+
+        return;
+
+    }
+
+    heroTitle.innerHTML = heroSlides[currentSlide].title;
+
+    heroDescription.textContent = heroSlides[currentSlide].text;
+
+    heroImage.src = heroSlides[currentSlide].image;
+
+}
+
+/*--------------------------
+    NEXT SLIDE
+---------------------------*/
+
+function nextHeroSlide(){
+
+    currentSlide++;
+
+    if(currentSlide >= heroSlides.length){
+
+        currentSlide = 0;
+
+    }
+
+    updateHero();
+
+}
+
+/*--------------------------
+    PREVIOUS SLIDE
+---------------------------*/
+
+function previousHeroSlide(){
+
+    currentSlide--;
+
+    if(currentSlide < 0){
+
+        currentSlide = heroSlides.length - 1;
+
+    }
+
+    updateHero();
+
+}
+
+/*--------------------------
+    BUTTON EVENTS
+---------------------------*/
+
+if(nextSlide){
+
+    nextSlide.addEventListener("click", nextHeroSlide);
+
+}
+
+if(prevSlide){
+
+    prevSlide.addEventListener("click", previousHeroSlide);
+
+}
+
+/*--------------------------
+    AUTO PLAY
+---------------------------*/
+
+setInterval(() => {
+
+    nextHeroSlide();
+
+}, 5000);
+
+/*--------------------------
+    LOAD FIRST SLIDE
+---------------------------*/
+
+updateHero();/*==========================================================
+    SECTION 4 - DARK MODE, SHOPPING CART & WISHLIST
+==========================================================*/
+
+/*--------------------------
+    DARK MODE
+---------------------------*/
+
+if(themeToggle){
+
+    themeToggle.addEventListener("click", () => {
+
+        darkMode = !darkMode;
+
+        body.classList.toggle("dark-mode");
+
+        const icon = themeToggle.querySelector("i");
+
+        if(icon){
+
+            if(darkMode){
+
+                icon.classList.remove("fa-moon");
+                icon.classList.add("fa-sun");
+
+            }else{
+
+                icon.classList.remove("fa-sun");
+                icon.classList.add("fa-moon");
+
+            }
+
+        }
+
+    });
+
+}
+
+/*--------------------------
+    SHOPPING CART
+---------------------------*/
+
+buyButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        cartItems++;
+
+        updateCartCounter();
+
+        showMessage("Product added to cart!");
+
+    });
+
 });
+
+/*--------------------------
+    WISHLIST
+---------------------------*/
+
+wishlistButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        button.classList.toggle("active");
+
+        const icon = button.querySelector("i");
+
+        if(icon){
+
+            if(button.classList.contains("active")){
+
+                icon.classList.remove("fa-regular");
+
+                icon.classList.add("fa-solid");
+
+                showMessage("Added to wishlist!");
+
+            }else{
+
+                icon.classList.remove("fa-solid");
+
+                icon.classList.add("fa-regular");
+
+                showMessage("Removed from wishlist!");
+
+            }
+
+        }
+
+    });
+
+});
+
+/*--------------------------
+    BUY BUTTON ANIMATION
+---------------------------*/
+
+buyButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        button.textContent = "Added ✓";
+
+        button.disabled = true;
+
+        setTimeout(() => {
+
+            button.textContent = "Buy Now";
+
+            button.disabled = false;
+
+        }, 2000);
+
+    });
+
+});
+
+/*--------------------------
+    RESET CART
+---------------------------*/
+
+function resetCart(){
+
+    cartItems = 0;
+
+    updateCartCounter();
+
+}
+
+window.resetCart = resetCart;/*==========================================================
+    SECTION 5 - NEWSLETTER, SCROLL EFFECTS & FINAL SETUP
+==========================================================*/
+
+/*--------------------------
+    NEWSLETTER FORM
+---------------------------*/
+
+if(newsletterForm){
+
+    newsletterForm.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+        const email = newsletterForm.querySelector("input").value.trim();
+
+        if(email === ""){
+
+            showMessage("Please enter your email address.");
+
+            return;
+
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if(!emailPattern.test(email)){
+
+            showMessage("Please enter a valid email address.");
+
+            return;
+
+        }
+
+        showMessage("Thank you for subscribing!");
+
+        newsletterForm.reset();
+
+    });
+
+}
+
+/*--------------------------
+    BACK TO TOP BUTTON
+---------------------------*/
+
+const backToTop = document.createElement("button");
+
+backToTop.innerHTML = '<i class="fa-solid fa-arrow-up"></i>';
+
+backToTop.className = "back-to-top";
+
+document.body.appendChild(backToTop);
+
+backToTop.style.display = "none";
+
+window.addEventListener("scroll", () => {
+
+    if(window.scrollY > 400){
+
+        backToTop.style.display = "flex";
+
+    }else{
+
+        backToTop.style.display = "none";
+
+    }
+
+});
+
+backToTop.addEventListener("click", () => {
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+});
+
+/*--------------------------
+    HEADER SHADOW ON SCROLL
+---------------------------*/
+
+const header = document.querySelector(".main-header");
+
+window.addEventListener("scroll", () => {
+
+    if(header){
+
+        if(window.scrollY > 50){
+
+            header.style.boxShadow = "0 10px 25px rgba(0,0,0,.15)";
+
+        }else{
+
+            header.style.boxShadow = "";
+
+        }
+
+    }
+
+});
+
+/*--------------------------
+    PAGE LOADED
+---------------------------*/
+
+window.addEventListener("load", () => {
+
+    console.log("Greby Website Ready!");
+
+});
+
+/*--------------------------
+    FINAL INITIALIZATION
+---------------------------*/
+
+updateCartCounter();
+
+updateHero();
