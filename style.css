@@ -1674,4 +1674,52 @@ body.dark-mode .section-header h2{
 
     }
 
+}/*--------------------------
+    BACK TO TOP BUTTON
+---------------------------*/
+
+.back-to-top{
+
+    position:fixed;
+
+    bottom:110px;
+
+    right:30px;
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    font-size:1.2rem;
+
+    box-shadow:var(--shadow-medium);
+
+    transition:var(--transition);
+
+    z-index:998;
+
+}
+
+.back-to-top:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-5px);
+
 }
